@@ -11,24 +11,72 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <!--script src="/js/app.js"></script-->
     </head>
-    <body ng-controller="StoreController as store" ng-app="appLista">
-
-        <center><div class="card" ng-repeat="product in store.products" style="width:50%;">
-            <h3 class="card-header">{{product.name}}</h3>
-            <div class="card-block" >
-              <p class="card-text">R{{product.price|currency}}</p>
-              <a href="#" class="btn btn-primary" style="float:right;">Detalhes ▼</a>
-            </div></center>
-        </div>
+    <body class="container" ng-controller="StoreController as store" ng-app="appLista">
+        <center><h2 style="font:normal 40pt Arial;color:#EBE6E6;text-shadow:#3B2DD4 2px 2px;">WIN coworking</h2></center>
+        <br>
+        <center><div ng-repeat="product in store.products" style="width:50%;">
+            <div class="card">
+                <h3 class="card-header">{{product.name}}</h3>
+                <div class="card-block" >
+                    <p class="card-text" style="text-align:left;margin-left:5px;float:left;">Data Nascimento: 22/43/2009</p>
+                    <p class="card-text" >Empresa: Ubots</p>
+                    <button type="button" class="btn btn-primary btn-sm" style="margin-bottom: 8px;" data-toggle="collapse" data-target="#{{product.id}}">Detalhes</button>
+                    <div id="{{product.id}}" class="collapse">
+                <table class="table">
+                        <thead>
+                            <tr class="thead-inverse">
+                                <th>Data</th>
+                                <th>Serviço</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>Default</td>
+                            <td>Defaultson</td>
+                            <td>def@somemail.com</td>
+                            </tr>      
+                            <tr class="success">
+                            <td>Success</td>
+                            <td>Doe</td>
+                            <td>john@example.com</td>
+                            </tr>
+                            <tr class="danger">
+                            <td>Danger</td>
+                            <td>Moe</td>
+                            <td>mary@example.com</td>
+                            </tr>
+                            <tr class="info">
+                            <td>Info</td>
+                            <td>Dooley</td>
+                            <td>july@example.com</td>
+                            </tr>
+                            <tr class="warning">
+                            <td>Warning</td>
+                            <td>Refs</td>
+                            <td>bo@example.com</td>
+                            </tr>
+                            <tr class="active">
+                            <td>Active</td>
+                            <td>Activeson</td>
+                            <td>act@example.com</td>
+                            </tr>
+                        </tbody>
+                        </table>                             
+                    </div>
+                </div>
+            </div><br>
+        </div></center>
 
     </body>
     <script>
         (function() {
             var app = angular.module('appLista', []);
             
-            var gems = [{name:'Azurite', price: 110.50},
-                        {name:'Bloodstone', price: 22.90},
-                        {name:'Zircon', price: 1100}];
+            var gems = [{id: 1,name:'Gustavo Silveira', price: 110.50},
+                        {id: 2,name:'Marcos Alves', price: 22.90},
+                        {id: 3,name:'Joel Correa', price: 1100},
+                        {id: 4,name:'Antonio Miranda', price:22}];
 
             app.controller('StoreController', function() {
                 this.products = gems;
