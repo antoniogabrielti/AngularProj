@@ -2,66 +2,48 @@
 <html xmlns:ng="http://angularjs.org" >
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Teste Angular</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-        <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <!--script src="/js/app.js"></script-->
+        <style>
+            th{
+                text-align: center;
+            }
+        </style>
     </head>
     <body class="container" ng-controller="StoreController as store" ng-app="appLista">
         <center><h2 style="font:normal 40pt Arial;color:#EBE6E6;text-shadow:#3B2DD4 2px 2px;">WIN coworking</h2></center>
         <br>
-        <center><div ng-repeat="product in store.products" style="width:50%;">
+        <center><div ng-repeat="user in store.users" style="width:50%;">
             <div class="card">
-                <h3 class="card-header">{{product.name}}</h3>
+                <h3 class="card-header">{{user.nome}}</h3>
                 <div class="card-block" >
-                    <p class="card-text" style="text-align:left;margin-left:5px;float:left;">Data Nascimento: 22/43/2009</p>
-                    <p class="card-text" >Empresa: Ubots</p>
-                    <button type="button" class="btn btn-primary btn-sm" style="margin-bottom: 8px;" data-toggle="collapse" data-target="#{{product.id}}">Detalhes</button>
-                    <div id="{{product.id}}" class="collapse">
-                <table class="table">
-                        <thead>
-                            <tr class="thead-inverse">
-                                <th>Data</th>
-                                <th>Serviço</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <td>Default</td>
-                            <td>Defaultson</td>
-                            <td>def@somemail.com</td>
-                            </tr>      
-                            <tr class="success">
-                            <td>Success</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                            </tr>
-                            <tr class="danger">
-                            <td>Danger</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                            </tr>
-                            <tr class="info">
-                            <td>Info</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                            </tr>
-                            <tr class="warning">
-                            <td>Warning</td>
-                            <td>Refs</td>
-                            <td>bo@example.com</td>
-                            </tr>
-                            <tr class="active">
-                            <td>Active</td>
-                            <td>Activeson</td>
-                            <td>act@example.com</td>
-                            </tr>
-                        </tbody>
+                    <p class="card-text" style="text-align:left;margin-left:5px;float:left;">Data Nascimento: {{user.dtaNascimento | date: 'dd/MM/yyyy'}}</p>
+                    <p class="card-text">Empresa: {{user.empresa}}</p>
+                    <p class="card-text" style="margin-left:5px;float:left;">Email: {{user.email}}</p>
+                    <p class="card-text">Biometria: <span class="badge {{store.span(user.cadastrado)}}">{{store.spanTexto(user.cadastrado)}}</span></p>
+                    <button type="button" class="btn btn-primary btn-sm" style="margin-bottom: 8px;" data-toggle="collapse" data-target="#{{user.id}}">Serviços</button>
+                    <div id="{{user.id}}" class="collapse">
+                        <table class="table" style="text-align:center;">
+                                <thead>
+                                    <tr class="thead-inverse">
+                                        <th>Data</th>
+                                        <th>Serviço</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="servico in user.servicos">
+                                        <td>{{servico.data | date:'dd/MM/yyyy'}}</td>
+                                        <td>{{servico.servico}}</td>
+                                        <td>R{{servico.preco | currency}}</td>
+                                    </tr>      
+                                </tbody>
                         </table>                             
                     </div>
                 </div>
@@ -72,14 +54,59 @@
     <script>
         (function() {
             var app = angular.module('appLista', []);
-            
-            var gems = [{id: 1,name:'Gustavo Silveira', price: 110.50},
-                        {id: 2,name:'Marcos Alves', price: 22.90},
-                        {id: 3,name:'Joel Correa', price: 1100},
-                        {id: 4,name:'Antonio Miranda', price:22}];
+
+            var usersWin = [{
+                id: 1,
+                nome: "Antonio Miranda",
+                dtaNascimento: "1990-05-14",
+                empresa: "Ubots",
+                email: "antonio@ubots.com.br",
+                cadastrado: false,
+                servicos: [{
+                    data: "2017-09-26",
+                    servico: "Lavanderia",
+                    preco: 62.70
+                },{
+                    data: "2017-09-28",
+                    servico: "Higienização",
+                    preco: 120.38 
+                }]
+            },{
+                id: 2,
+                nome: "Johnny Deep",
+                dtaNascimento: "1963-06-09",
+                empresa : "Wanner",
+                email: "Johnny@wannerbros.com",
+                cadastrado: true,
+                servicos:[{
+                    data: "2017-06-22",
+                    servico: "Estacionamento",
+                    preco: 250
+                },{
+                    data:"2017-08-15",
+                    servico: "Almoço",
+                    preco: 547,
+                }]
+            }];
 
             app.controller('StoreController', function() {
-                this.products = gems;
+                this.users = usersWin;
+
+                this.span = function(cadastrado){
+                    return cadastrado ? "badge-success" : "badge-danger";
+                };
+
+                this.spanTexto = function(cadastrado){
+                    return cadastrado ? "Cadastrado" : "Não Cadastrado";
+                };
+            });
+
+            app.controller('ServiceController',function(){
+                this.servico = {}; 
+                this.addServico = function(user){
+                    this.user.servicos.push(this.servico);
+                    this.servico = {}; //ng-options="stars for stars in [5,4,3,2,1]"
+                };
             });
             
         })();   

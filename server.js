@@ -6,8 +6,7 @@ http.createServer(function(req,res) {
 
   if(req.url==='/'){
     res.writeHead(200);
-    res.end(fs.readFileSync('templates/index.html'));
-    
+    res.end(fs.readFileSync('templates/index.html'));   
   }
 
 }).listen(3000);
